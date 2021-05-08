@@ -1,3 +1,4 @@
+<#include "../bases/header.ftl"/>
 <#if errors??>
 ${errors}
 </#if>

@@ -70,21 +70,22 @@ public abstract class BaseCrudController<T extends BaseEntity, DTO> {
     }
 
     @PostMapping(value = {CREATE_ROUTE})
-    public String createPost(final DTO dto, final RedirectAttributes attributes) {
+    public String createPost(final DTO dto, final RedirectAttributes attributes, HttpServletRequest request) {
         String result = this.REDIRECT_INDEX;
-
         try {
-            T item = this.preCreatePost(dto);
+        	System.out.println("try");
+            T item = this.preCreatePost(dto, request);
             this.repository.save(item);
         } catch (Exception e) {
+        	System.out.println(e);
             attributes.addFlashAttribute(FLASH_ERRORS, e.getMessage());
             result = this.REDIRECT_CREATE;
         }
-
         return result;
     }
 
-    protected T preCreatePost(DTO dto) throws Exception {
+    @SuppressWarnings("unchecked")
+	protected T preCreatePost(DTO dto, HttpServletRequest re) throws Exception {
         return (T)dto;
     }
 
